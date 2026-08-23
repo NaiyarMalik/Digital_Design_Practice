@@ -1,0 +1,36 @@
+// ============================================================
+// Naiyar Malik
+// ID: rtl6 — Binary Counter + Gray Output
+// ============================================================
+// Goal: binary counter increments; gray = bin ^ (bin >> 1). 
+
+module bin_to_gray_counter #(
+  parameter int W = 4
+) (
+  input  logic         clk,
+  input  logic         rst_n,
+  input  logic         enable,
+  output logic [W-1:0] bin_count,
+  output logic [W-1:0] gray_count
+);
+
+
+  always_ff @ (posedge clk)
+    begin
+      if(!rst_n)
+        begin
+          bin_count <= 0;
+        end
+      else if(enable)
+        begin
+          if(bin_count == 2**W)
+            bin_count <= 0;
+          else
+            bin_count <= bin_count + 4'b1;
+        end
+    end
+
+  assign gray_count = bin_count ^ (bin_count >> 1);
+
+
+endmodule
