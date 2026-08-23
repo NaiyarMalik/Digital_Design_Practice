@@ -1,0 +1,48 @@
+// ============================================================
+// ID: rtl3 — Sequence Detector FSM (10110)
+// ============================================================
+// Goal: FSM asserts 1-cycle match when serial pattern 10110 completes. 
+
+module seq_det_10110 (
+  input  logic clk,
+  input  logic rst_n,
+  input  logic bit_in,
+  output logic match_pulse
+);
+
+  typedef enum logic [2:0]{
+    IDLE,
+    GOT1,
+    GOT10,
+    GOT101,
+    GOT1011,
+    DONE
+  } states_t
+
+  state_t [2:0] curr, nxt;
+
+  always_ff @ (posedge clk)
+    begin
+      if(!rst_n)
+        curr <= IDLE;
+      else
+        curr <= nxt;
+    end
+
+  always_comb 
+    begin
+      case(curr)
+        IDLE:
+          begin
+            if(bit_in)
+              nxt = GOT1;
+            else
+              nxt = IDLE;
+          end
+
+
+      endcase
+    end
+
+
+endmodule
