@@ -53,8 +53,9 @@ module clk_div3_50 (
         end
       else
         begin
-          if(pos_cnt == 2'b01)
+          if(pos_cnt == 2'b10)
             neg_pulse_reg <= 1'b1;
+            rise_pulse_reg <= 1'b0;
           else
             neg_pulse_reg <= 0; 
         end
